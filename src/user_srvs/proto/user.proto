@@ -1,0 +1,63 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = './;proto';
+
+service User {
+    rpc GetUserList(PageInfo) returns (UserListResponse);
+    rpc QueryUserByMobile(GetUserMobile) returns (UserInfoResponse);
+    rpc QueryUserByID(GetUserID) returns (UserInfoResponse);
+    rpc CreateUser(CreateUserInfo) returns (UserInfoResponse);
+    rpc UpdateUser(UpdateUserInfo) returns (google.protobuf.Empty);
+    rpc CheckPassword(PasswordCheckInfo) returns (CheckResponse);
+}
+
+message PageInfo {
+    uint32 pn = 1;
+    uint32 pSize = 2;
+}
+
+message UserInfoResponse {
+    uint32 ID = 1;
+    string PassWord = 2;
+    string Mobile = 3;
+    string NickName = 4;
+    uint64 Birthday = 5;
+    string Sex = 6;
+    uint32 Role = 7;
+}
+
+message UserListResponse {
+    uint32 total = 1;
+    repeated UserInfoResponse data = 2;
+}
+
+message GetUserMobile {
+    string Mobile = 1;
+}
+
+message GetUserID {
+    uint32 ID = 1;
+}
+
+message CreateUserInfo {
+    // 通过mobile创建, 并且生成随机的密码
+    string NickName = 1;
+    string Mobile = 2;
+    string Password = 3;
+}
+
+message UpdateUserInfo {
+    uint32 ID = 1; // 数据库中用户 ID
+    string NickName = 2;
+    string Sex = 3;
+    uint64 Birthday = 4;
+}
+
+message PasswordCheckInfo {
+    string Password = 1; // 原始密码
+    string encrytedPassword = 2; // 数据库中加密之后的密码
+}
+
+message CheckResponse {
+    bool success = 1;
+}

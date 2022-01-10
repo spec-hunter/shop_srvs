@@ -1,0 +1,12 @@
+name: "user-srvs"
+
+mysql:
+  host: "192.168.3.161"
+  port: 3306
+  user: "root"
+  pass_word: "root"
+  db: "user_srvs"
+
+consul:
+  host: "192.168.3.161"
+  port: 8500
